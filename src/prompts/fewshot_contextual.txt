@@ -1,0 +1,32 @@
+Analyze the provided scientific text *evidence excerpt* and predict the <MASKED> confidence level of the *conclusion statement* based on contextual evidence.
+Avoid external knowledge. Rely only on the provided text. Base your evaluation on the type, quantity, consistency, and agreement of presented evidences
+
+Respond *only* with one of the following words: 'low', 'medium', 'high'.
+
+Example One
+Evidence Excerpt:
+{evidence_excerpt1}
+Conclusion Statement:
+{conclusion_statement1}
+Output:
+{true_confidence1}
+
+
+
+Example Two
+Evidence Excerpt:
+{evidence_excerpt2}
+Conclusion Statement:
+{conclusion_statement2}
+Output:
+{true_confidence2}
+
+
+
+Example Three
+Evidence Excerpt:
+{evidence_excerpt3}
+Conclusion Statement:
+{conclusion_statement3}
+Output:
+{true_confidence3}

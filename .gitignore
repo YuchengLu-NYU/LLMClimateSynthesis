@@ -1,0 +1,8 @@
+jsonl/
+responses/
+.env
+__pycache__/
+
+
+*.md
+*.pdf
