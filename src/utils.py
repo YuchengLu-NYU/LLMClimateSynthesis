@@ -138,33 +138,3 @@ def get_summarization_results(response_dir):
     return merged_df
 
 
-# %%
-if __name__ == "__main__":
-    SCRIPT_DIR = Path(__file__).parent
-    RESPONSE_DIR = SCRIPT_DIR.parent / "responses"
-# %%
-
-
-    DSCReasoner_summarization = parse_completion_data("E:\Github\LLMClimateSynthesis\outputs\DSCReasoner-summarization")
-    DSCReasoner_summarization = DSCReasoner_summarization.rename(columns={'content': 'content_ds', 'token_usage': 'token_usage_ds'})
-
-    o3mini_summarization = parse_completion_data("E:\Github\LLMClimateSynthesis\outputs\o3mini-summarization")
-    o3mini_summarization = o3mini_summarization.rename(columns={'content': 'content_o3', 'token_usage': 'token_usage_o3'})
-
-    gpt4o_summarization = parse_jsonl_outputs("E:\Github\LLMClimateSynthesis\outputs\summarization_4o_results.jsonl")
-    gpt4o_summarization = gpt4o_summarization.rename(columns={'content': 'content_gpt4o', 'token_usage': 'token_usage_gpt4o'})
-    gpt4o_summarization['id'] = gpt4o_summarization['id'].astype(int)
-
-    merged_df = pd.merge(df, DSCReasoner_summarization, left_index=True, right_on='id', how='outer')
-    merged_df = merged_df.drop('id', axis=1)
-
-    merged_df = pd.merge(merged_df, o3mini_summarization, left_index=True, right_on='id', how='outer')
-    merged_df = merged_df.drop('id', axis=1)
-
-    merged_df = pd.merge(merged_df, gpt4o_summarization, left_index=True, right_on='id', how='outer')
-    merged_df = merged_df.drop('id', axis=1)
-
-    # Drop duplicate evidence -- this is the only context that matters for summarization
-    merged_df = merged_df.drop_duplicates(subset=['evidence'], keep='first')
-
-    merged_df.to_csv("E:\Github\LLMClimateSynthesis\outputs\summarization_results.csv", index=False)
